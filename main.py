@@ -1,9 +1,12 @@
-# sample code taken from https://github.com/Rapptz/discord.py
-
 import discord
 import asyncio
+import yaml
 
 client = discord.Client()
+
+'''Make backup saves every x seconds'''
+async def backup(x):
+    await asyncio.sleep(x)
 
 @client.event
 async def on_ready():
@@ -21,5 +24,13 @@ async def on_message(message):
     if str(message.channel) == 'discordplays':
         await client.send_message(message.channel, 'Welcome to Discord Plays!')
 
-token = open('token.txt').readline().strip()
+
+with open('config.yaml', 'r') as ymlfile:
+    cfg = yaml.load(ymlfile)
+backup_frequency = int(cfg['backup_frequency'])
+token = cfg['token']
+if(token == 'INSERT TOKEN HERE'):
+    print('No token present in config file!')
+    exit(-1)
+client.loop.create_task(backup(backup_frequency))
 client.run(token)
