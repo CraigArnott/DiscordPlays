@@ -1,2 +1,5 @@
+# token for bot authentication
 token: INSERT TOKEN HERE
+# frequency that the emulator should perform backups, in seconds
 backup_frequency: 10
+
